@@ -483,9 +483,10 @@ def is_strict_required(tool_name: str, action: str, params: Optional[Dict[str, A
     """True if the call must refuse to run when archive fails.
 
     Triggers on (a) STRICT_DEFAULT_ACTIONS membership, (b) ripple delete on
-    timeline.delete_clips, or (c) explicit `strict=True` in params.
+    timeline.delete_clips, or (c) an explicit `strict=true` in params, in any
+    spelling `coerce_bool` recognises.
     """
-    if isinstance(params, dict) and params.get("strict") is True:
+    if isinstance(params, dict) and coerce_bool(params.get("strict")):
         return True
     if (tool_name, action) in STRICT_DEFAULT_ACTIONS:
         return True
